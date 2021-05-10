@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="p-grid-12">
+		<div class="p-col-12">
+			<h1>Pessoas</h1>
+		</div>
+
+		<form (ngSubmit)="pesquisar()">
+
+			<div class="p-col-12 p-fluid input">
+				<label for="nome">Nome</label>
+				<input type="text" name="nome" id="" pInputText [(ngModel)]="filtro.nome">
+
+			</div>
+			<div class="p-col-12 button">
+				<button pButton type="submit" label="Pesquisar"></button>
+			</div>
+
+		</form>
+		<div class="p-col-12">
+			<p-table #tabela [value]="pessoas" [responsive]=true [paginator]=true [rows]="filtro.itensPorPagina" [lazy]="true"
+				[totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>Nome</th>
+						<th>Cidade</th>
+						<th>Estado</th>
+						<th>Status</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-pessoa>
+					<tr>
+						<td><span class="p-column-title">Pessoa</span>{{ pessoa.nome }}</td>
+						<td><span class="p-column-title">Descrição</span>{{ pessoa.endereco.cidade }}</td>
+						<td><span class="p-column-title">Estado</span>{{ pessoa.endereco.estado }}</td>
+						<td>
+							<a href="javascript:;" [ngStyle]="{ 'text-decoration': 'none', 'color': 'inherit' }"
+								[pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tolltipPosition="top" (click)="mudarStatus(pessoa)">
+								<span class="p-column-title">Status</span>{{ pessoa.ativo ? 'Ativo' : 'Inativo'}}
+							</a>
+						</td>
+						<td class="col-acoes">
+							<button type="button" [routerLink]="['/pessoas', pessoa.codigo]" pButton pTooltip="Editar" [disabled]="!auth.temPermissao('ROLE_CADASTRAR_PESSOA')" tooltipPosition="top" icon="pi pi-pencil"></button>
+							<button (click)="confirmarExclusao(pessoa)" pButton pTooltip="Excluir" tooltipPosition="top" [disabled]="!auth.temPermissao('ROLE_REMOVER_PESSOA')" icon="pi pi-trash"></button>
+						</td>
+					</tr>
+
+				</ng-template>
+			</p-table>
+		</div>
+
+		<div class="p-col-12">
+			<button type="button" routerLink="/pessoas/nova" pButton label="Nova Pessoa"></button>
+		</div>
+	</div>
+
+</div>

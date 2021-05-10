@@ -1,1 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+	margin: 0 auto;
+	font-family: monospace, Arial, Helvetica, sans-serif;
+	color: #404c51;
+}
+
+label {
+	font-weight: bold;
+	padding: 5px;
+}
+
+@media (min-width: 1200px) {
+	.container {
+		width: 1170px;
+		margin: 0 auto;
+	}
+}
+.input {
+	padding: 5px;
+}
+
+.button {
+	margin: .5em;
+}
+
+.col-valor {
+	text-align: right !important;
+}
+
+.col-data {
+	text-align: center !important;
+}
+
+.col-acoes {
+	width: 115px;
+	text-align: center !important;
+}
+.col-acoes .p-button {
+	margin: 1px;
+}
+
+

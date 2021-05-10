@@ -1,0 +1,40 @@
+<nav class="navbar">
+	<div class="p-grid-12">
+		<div class="p-col-12">
+			<span class="navbar-usuario">
+				<a class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu" href="javascript:;">
+					<i class="pi pi-bars"></i>
+					{{ auth.jwtPayload?.nome }}
+				</a>
+			</span>
+			<ul class="navbar-menu p-col-12" [ngStyle]="!exibindoMenu ? { 'display': 'none' } : {}">
+
+				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/lancamentos">Lançamentos</a>
+				</li>
+				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')"><a routerLink="/pessoas">Pessoas</a></li>
+				<li [hidden]="!exibindoMenu" class="navbar-menuitem"><a href="#" (click)="logout()">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!--
+	<nav class="navbar" >
+		<div class="p-grid-12">
+			<div class="p-col-12 p-md-3">
+				<li class="navbar-usuario" [ngStyle]="{ 'display': 'inline' }">
+					{{ auth.jwtPayload?.nome }}
+				</li>
+				<li class="p-col-12 p-md-3 navbar-menu" [ngStyle]="{ 'display': 'inline' }" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/lancamentos">Lançamentos</a>
+				</li>
+				<li class="p-col-12 p-md-3 navbar-menu" [ngStyle]="{ 'display': 'inline' }" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')"><a routerLink="/pessoas">Pessoas</a></li>
+				<li class="p-col-12 p-md-3 navbar-menu" [ngStyle]="{ 'display': 'inline' }"><a href="#" (click)="logout()">Logout</a>
+				</li>
+			</div>
+		</div>
+	</nav> -->
+

@@ -1,0 +1,88 @@
+<div class="container">
+	<form (ngSubmit)="salvar()" [formGroup]="formulario">
+		<div class="p-grid-12">
+
+			<div class="p-col-12">
+				<h1>{{ editando ? 'Edição de' : 'Novo' }} Lançamento</h1>
+			</div>
+
+			<div class="p-col-12">
+				<p-selectButton [options]="tipos" name="tipo" formControlName="tipo">
+				</p-selectButton>
+
+			</div>
+
+			<div class="p-col-6 p-md-3 p-fluid" [ngStyle]="{'display': 'inline-block'}">
+
+				<label for="dataVencimento">Vencimento</label>
+				<p-calendar name="dataVencimento" formControlName="dataVencimento" dateFormat="dd/mm/yy"
+					[showIcon]="true"></p-calendar>
+
+				<app-message text="Informe o vencimento" error="required" [control]="formulario.get('dataVencimento')">
+				</app-message>
+
+			</div>
+
+			<div class="p-col-6 p-md-3 p-fluid" [ngStyle]="{'display': 'inline-block'}">
+
+				<label for="dataPagamento">{{ formulario.get('tipo').value === 'RECEITA' ? 'Recebimento' : 'Pagamento'
+					}}</label>
+				<p-calendar name="dataPagamento" formControlName="dataPagamento" dateFormat="dd/mm/yy"
+					[showIcon]="true"></p-calendar>
+			</div>
+
+
+
+			<div class="p-col-12 p-md-9 p-fluid" [ngStyle]="{'display': 'inline-block'}">
+				<label for="descricao">Descrição</label>
+				<input pInputText type="text" name="descricao" formControlName="descricao">
+
+				<app-message [control]="formulario.get('descricao')"
+					text="Informe uma Descrição"
+					error="obrigatoriedade">
+				</app-message>
+
+				<app-message [control]="formulario.get('descricao')"
+					text="Mínimo de {{ formulario.get('descricao').errors?.tamanhoMinimo?.tamanho }} caracteres"
+					error="tamanhoMinimo">
+				</app-message>
+
+			</div>
+
+			<div class="p-col-12 p-md-3 p-fluid" [ngStyle]="{'display': 'inline-block'}">
+				<label for="valor">Valor</label>
+				<input pInputText type="text" name="valor" formControlName="valor" placeholder="R$ 0,00" currencyMask
+					[options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }">
+
+				<app-message text="Informe o valor" error="required" [control]="formulario.get('valor')"></app-message>
+
+			</div>
+
+			<div class="p-col-12 p-md-6 p-fluid" formGroupName="categoria" [ngStyle]="{'display': 'inline-block'}">
+				<label for="categoria">Categoria</label>
+				<p-dropdown name="categoria" formControlName="codigo" [options]="categorias" placeholder="Selecione"
+					></p-dropdown>
+			</div>
+
+			<div class="p-col-12 p-md-6 p-fluid" formGroupName="pessoa" [ngStyle]="{'display': 'inline-block'}">
+				<label for="pessoa">Pessoa</label>
+				<p-dropdown name="pessoa" formControlName="codigo" [options]="pessoas" [filter]="true" placeholder="Selecione"
+					></p-dropdown>
+			</div>
+
+			<div class="p-col-12 p-fluid">
+				<label for="observacao">Observação</label>
+				<textarea name="observacao" formControlName="observacao" pInputText rows="3"></textarea>
+			</div>
+
+			<div class="p-col-12 ">
+				<button pButton type="submit" label="Salvar" [disabled]="formulario.invalid"></button>
+				<button pButton type="button" label="Novo" class="p-button-info" (click)="novo()"></button>
+				<a routerLink="/lancamentos">Voltar para a pesquisa</a>
+			</div>
+		</div>
+
+	</form>
+
+
+</div>
