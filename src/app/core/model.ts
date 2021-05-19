@@ -8,11 +8,26 @@ export class Endereco {
 	estado: string | undefined;
 }
 
+export class Contato {
+	codigo: number | undefined;
+	nome: string | undefined;
+	email: string | undefined;
+	telefone: string | undefined;
+
+	constructor(codigo?: number, nome?: string, email?: string, telefone?: string) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
+	}
+}
+
 export class Pessoa {
 	codigo: number | undefined;
 	nome: string | undefined;
 	endereco = new Endereco();
 	ativo = true;
+	contatos: Array<Contato> | any;
 }
 
 export class Categoria {

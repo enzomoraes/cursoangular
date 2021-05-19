@@ -10,10 +10,15 @@
 			<ul class="navbar-menu p-col-12" [ngStyle]="!exibindoMenu ? { 'display': 'none' } : {}">
 
 				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/dashboard">Dashboard</a></li>
+				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
 					*ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/lancamentos">Lançamentos</a>
 				</li>
 				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
 					*ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')"><a routerLink="/pessoas">Pessoas</a></li>
+				<li [hidden]="!exibindoMenu" class="navbar-menuitem" routerLinkActive="ativo"
+					*ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/relatorios/lancamentos">Relatório por
+						Pessoa</a></li>
 				<li [hidden]="!exibindoMenu" class="navbar-menuitem"><a href="#" (click)="logout()">Logout</a></li>
 			</ul>
 		</div>

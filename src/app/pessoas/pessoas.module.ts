@@ -13,6 +13,9 @@ import { PessoaPesquisaComponent } from './pessoa-pesquisa/pessoa-pesquisa.compo
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { PessoasRoutingModule } from './pessoas-routing.module';
+import { PanelModule } from 'primeng/panel';
+import { CoreModule } from '../core/core.module';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
 	declarations: [
@@ -29,6 +32,8 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
 		TableModule,
 		TooltipModule,
 		InputMaskModule,
+		PanelModule,
+		DialogModule,
 
 		SharedModule,
 		PessoasRoutingModule

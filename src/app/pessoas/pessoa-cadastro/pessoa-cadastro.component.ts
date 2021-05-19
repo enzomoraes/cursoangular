@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Pessoa } from 'src/app/core/model';
+import { Contato, Pessoa } from 'src/app/core/model';
 import { PessoaService } from '../pessoa.service';
 
 @Component({
@@ -14,7 +14,9 @@ import { PessoaService } from '../pessoa.service';
 })
 export class PessoaCadastroComponent implements OnInit {
 
-	pessoa = new Pessoa();
+	exibindoFormularioContato = false;
+	pessoa: Pessoa;
+	contato!: Contato;
 
 	constructor(
 		private pessoaService: PessoaService,
@@ -23,7 +25,10 @@ export class PessoaCadastroComponent implements OnInit {
 		private title: Title,
 		private router: Router,
 		private route: ActivatedRoute,
-	) { }
+
+		) {
+			this.pessoa = new Pessoa();
+		}
 
 	ngOnInit(): void {
 
@@ -36,8 +41,26 @@ export class PessoaCadastroComponent implements OnInit {
 		}
 	}
 
+	prepararNovoContato(): void {
+		this.exibindoFormularioContato = true;
+
+		this.contato = new Contato();
+	}
+
+	clonarContato(contato: Contato): Contato {
+		return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone)
+	}
+
 	get editando(): boolean {
 		return Boolean(this.pessoa.codigo);
+	}
+
+	confirmarContato(form: NgForm): void {
+		this.pessoa.contatos.push(this.clonarContato(this.contato));
+
+		this.exibindoFormularioContato = false;
+
+		form.reset();
 	}
 
 	carregarPessoa(codigo: number): void {

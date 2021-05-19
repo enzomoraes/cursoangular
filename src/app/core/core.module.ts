@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { NavbarComponent } from './navbar/navbar.component';
@@ -14,6 +15,8 @@ import { PessoaService } from '../pessoas/pessoa.service';
 import { AuthService } from '../seguranca/auth.service';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { PaginaNaoAutorizadaComponent } from './pagina-nao-autorizada.component';
+import { DashboardService } from '../dashboard/dashboard.service';
+import { RelatoriosService } from '../relatorios/relatorios.service';
 
 @NgModule({
 	declarations: [
@@ -26,11 +29,13 @@ import { PaginaNaoAutorizadaComponent } from './pagina-nao-autorizada.component'
 		RouterModule,
 		ToastModule,
 		ConfirmDialogModule,
+		DialogModule,
 	],
 	exports: [
 		NavbarComponent,
 		ToastModule,
-		ConfirmDialogModule
+		ConfirmDialogModule,
+		DialogModule
 	],
 	providers: [
 		LancamentoService,
@@ -40,7 +45,9 @@ import { PaginaNaoAutorizadaComponent } from './pagina-nao-autorizada.component'
 		ConfirmationService,
 		ErrorHandlerService,
 		Title,
-		AuthService
+		AuthService,
+		DashboardService,
+		RelatoriosService
 	]
 })
 export class CoreModule { }
