@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Contato, Pessoa } from 'src/app/core/model';
+import { Estado, Pessoa } from 'src/app/core/model';
 import { PessoaService } from '../pessoa.service';
 
 @Component({
@@ -14,9 +14,12 @@ import { PessoaService } from '../pessoa.service';
 })
 export class PessoaCadastroComponent implements OnInit {
 
-	exibindoFormularioContato = false;
 	pessoa: Pessoa;
-	contato!: Contato;
+
+	estados!: any[];
+	estadoSelecionado!: any;
+
+	cidades!: any[];
 
 	constructor(
 		private pessoaService: PessoaService,
@@ -36,31 +39,15 @@ export class PessoaCadastroComponent implements OnInit {
 
 		this.title.setTitle('Nova Pessoa');
 
+		this.carregarEstados();
+
 		if (codigoPessoa) {
 			this.carregarPessoa(codigoPessoa);
 		}
 	}
 
-	prepararNovoContato(): void {
-		this.exibindoFormularioContato = true;
-
-		this.contato = new Contato();
-	}
-
-	clonarContato(contato: Contato): Contato {
-		return new Contato(contato.codigo, contato.nome, contato.email, contato.telefone)
-	}
-
 	get editando(): boolean {
 		return Boolean(this.pessoa.codigo);
-	}
-
-	confirmarContato(form: NgForm): void {
-		this.pessoa.contatos.push(this.clonarContato(this.contato));
-
-		this.exibindoFormularioContato = false;
-
-		form.reset();
 	}
 
 	carregarPessoa(codigo: number): void {
@@ -68,6 +55,13 @@ export class PessoaCadastroComponent implements OnInit {
 		this.pessoaService.pesquisarPorCodigo(codigo)
 			.then(pessoa => {
 				this.pessoa = pessoa;
+
+				this.estadoSelecionado = (this.pessoa.endereco.cidade) ? this.pessoa.endereco.cidade.estado.codigo : null;
+
+				if (this.estadoSelecionado) {
+					this.carregarCidades();
+				}
+
 				this.title.setTitle('Edição de Pessoa');
 			})
 			.catch(erro => this.errorHandlerService.handle(erro));
@@ -119,4 +113,19 @@ export class PessoaCadastroComponent implements OnInit {
 		this.router.navigate(['pessoas', 'nova']);
 	}
 
+	private carregarEstados(): void {
+		this.pessoaService.listarEstados()
+			.then(lista => {
+				this.estados = lista.map(uf => ({ label: uf.nome, value: uf.codigo }));
+			})
+			.catch(erro => this.errorHandlerService.handle(erro));
+	}
+
+	carregarCidades(): void {
+		this.pessoaService.pesquisarCidades(this.estadoSelecionado)
+			.then(lista => {
+				this.cidades = lista.map(c => ({ label: c.nome, value: c.codigo }));
+			})
+			.catch(erro => this.errorHandlerService.handle(erro));
+	}
 }

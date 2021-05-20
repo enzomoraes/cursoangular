@@ -1,11 +1,21 @@
+export class Estado {
+	codigo!: number;
+	nome!: string;
+}
+
+export class Cidade {
+	codigo!: number;
+	nome!: string;
+	estado = new Estado();
+}
+
 export class Endereco {
 	logradouro: string | undefined;
 	numero: number | undefined;
 	complemento: string | undefined;
 	bairro: string | undefined;
 	cep: string | undefined;
-	cidade: string | undefined;
-	estado: string | undefined;
+	cidade = new Cidade();
 }
 
 export class Contato {

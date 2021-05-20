@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 					label: (tooltipItem: any, data: any) => {
 						const dataset = data.datasets[tooltipItem.datasetIndex];
 						const valor = dataset.data[tooltipItem.index];
-						const label = dataset.label ? (dataset.label + ': ') : '';
+						const label = dataset.label ? `${dataset.label}: ` : `${data.labels[tooltipItem.index]}: `;
 
 						return (label + this.decimalPipe.transform(valor, '1.2-2'));
 					}

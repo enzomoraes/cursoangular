@@ -30,8 +30,8 @@
 				<ng-template pTemplate="body" let-pessoa>
 					<tr>
 						<td><span class="p-column-title">Pessoa</span>{{ pessoa.nome }}</td>
-						<td><span class="p-column-title">Descrição</span>{{ pessoa.endereco.cidade }}</td>
-						<td><span class="p-column-title">Estado</span>{{ pessoa.endereco.estado }}</td>
+						<td><span class="p-column-title">Descrição</span>{{ pessoa.endereco.cidade.nome }}</td>
+						<td><span class="p-column-title">Estado</span>{{ pessoa.endereco.cidade.estado.nome }}</td>
 						<td>
 							<a href="javascript:;" [ngStyle]="{ 'text-decoration': 'none', 'color': 'inherit' }"
 								[pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'" tolltipPosition="top" (click)="mudarStatus(pessoa)">
